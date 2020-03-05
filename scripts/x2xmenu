@@ -1,0 +1,13 @@
+#!/bin/bash
+
+function killx2x {
+	 ps aux | grep x2x | grep -v grep | awk '{print $2}' | xargs kill -9
+}
+
+
+MENU="$(rofi -sep "|" -dmenu -i -p 'x2x' -theme ~/.cache/wal/colors-rofi-dark.rasi -location 0 -xoffset -14 -yoffset -52 -width 10 -hide-scrollbar -line-padding 4 -padding 20 -lines 4 <<< "Optiplex|Quit")"
+#MENU="$(rofi -sep "|" -dmenu -i -p 'System' -location 5 -xoffset -14 -yoffset -52 -width 10 -hide-scrollbar -line-padding 4 -padding 20 -lines 4 <<< " Lock| Logout| Reboot| Shutdown")"
+            case "$MENU" in
+                *Optiplex) ssh -X yannick@192.168.0.44 'x2x -east -to :0' & ;;
+				*Quit) killx2x ;;
+            esac
