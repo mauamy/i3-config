@@ -7,7 +7,7 @@
 set $mod Mod4
 
 # Set wallpaper path
-set $wallpaper ~/Pictures/Wallpaper/coniferous-landscape-1920×1080.png
+set $wallpaper ~/Pictures/Wallpaper/Minimal-Hogwarts.png
 #house-in-woods-minimalism_1920x1080.png
 #nature-sunrise-digital-art-river-landscape-mountains-trees-uhdpaper.com-hd-31.png 
 
@@ -172,6 +172,15 @@ for_window [instance="dashboard"] move scratchpad
 for_window [instance="dashboard"] border pixel 5
 exec --no-startup-id $term -n "dashboard" -e wtfutil
 bindsym $mod+o [instance="dashboard"] scratchpad show; [instance="dashboard"] move position center 
+
+# notes
+#for_window [instance="notes"] floating enable
+#for_window [instance="notes"] resize set 850 500
+#for_window [instance="notes"] move scratchpad
+#for_window [instance="notes"] border pixel 0
+#exec --no-startup-id notes
+#bindsym $mod+Shift+n [instance="notes"] scratchpad show; [instance="notes"] move position center 
+
 
 ## keepass
 #for_window [instance="keepass"] floating enable
@@ -343,6 +352,12 @@ set_from_resource $i3-wm.bar.font i3-wm.bar.font "pango:Source Code Pro Medium 1
 #  }
 #}
 
+# make picture-in-picture sticky
+for_window [instance="Toolkit"] sticky enable
+
+# add title bar for omnet ide
+#for_window [instance="Qtenv"] border normal
+
 # bind programm to specific workspaces
 assign [class="Rhythmbox"] $ws10
 
@@ -364,4 +379,5 @@ exec --no-startup-id /usr/bin/unclutter -b
 
 # Set wallpaper and theme via wal
 exec --no-startup-id wal -q -i $wallpaper & #~/Pictures/Wallpapers/minimalist-nature-forest-mountains-digital-art-uhdpaper.com-hd-36.jpg
+
 
