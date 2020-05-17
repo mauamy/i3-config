@@ -191,12 +191,12 @@ exec $term -n "popup-arithmetic" -e python3 -q
 bindsym $mod+a [instance="popup-arithmetic"] scratchpad show; [instance="popup-arithmetic"] move position center
 
 ## dashboard
-for_window [instance="dashboard"] floating enable
-for_window [instance="dashboard"] resize set 1300 700
-for_window [instance="dashboard"] move scratchpad
-for_window [instance="dashboard"] border pixel 5
-exec --no-startup-id $term -n "dashboard" -e wtfutil
-bindsym $mod+o [instance="dashboard"] scratchpad show; [instance="dashboard"] move position center 
+#for_window [instance="dashboard"] floating enable
+#for_window [instance="dashboard"] resize set 1300 700
+#for_window [instance="dashboard"] move scratchpad
+#for_window [instance="dashboard"] border pixel 5
+#exec --no-startup-id $term -n "dashboard" -e wtfutil
+#bindsym $mod+o [instance="dashboard"] scratchpad show; [instance="dashboard"] move position center 
 
 # notes
 #for_window [instance="notes"] floating enable
