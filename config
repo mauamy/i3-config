@@ -52,12 +52,12 @@ bindsym $mod+Shift+Return exec /usr/bin/firefox #/usr/bin/google-chrome
 # kill focused window
 bindsym $mod+Shift+q kill
 
-set_from_resource $rofiTheme rofi.theme "regolith-theme"
+#set_from_resource $rofiTheme rofi.theme "regolith-theme"
 
 # rofi app and window launchers
-bindsym $mod+space exec rofi -show drun -theme "~/.cache/wal/colors-rofi-dark.rasi"
-bindsym $mod+Shift+space exec rofi -show run -theme "~/.cache/wal/colors-rofi-dark.rasi" #$rofiTheme
-bindsym $mod+Ctrl+space exec rofi -show window -theme "~/.cache/wal/colors-rofi-dark.rasi" #$rofiTheme
+bindsym $mod+space exec rofi -show drun -theme "~/.cache/wal/colors-rofi-dark.rasi" -show-icons
+bindsym $mod+Shift+space exec rofi -show run -theme "~/.cache/wal/colors-rofi-dark.rasi" -show-icons #$rofiTheme
+bindsym $mod+Ctrl+space exec rofi -show window -theme "~/.cache/wal/colors-rofi-dark.rasi" -show-icons #$rofiTheme
 
 # change focus
 bindsym $mod+Left focus left
