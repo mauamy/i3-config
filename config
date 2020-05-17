@@ -6,8 +6,11 @@
 # Alt key is Mod1, and Windows key is Mod4
 set $mod Mod4
 
+set $mainMonitor eDP-1-1
+
 # Set wallpaper path
-set $wallpaper ~/Pictures/Wallpaper/Minimal-Hogwarts.png
+set $wallpaper ~/Pictures/Wallpapers/forest-at-dusk-mikael-gustafsson-download-link-in-comments-1920×1080.png
+
 #house-in-woods-minimalism_1920x1080.png
 #nature-sunrise-digital-art-river-landscape-mountains-trees-uhdpaper.com-hd-31.png 
 
@@ -44,7 +47,7 @@ set $term /usr/local/bin/st
 bindsym $mod+Return exec $term 
 
 # start a web browser
-bindsym $mod+Shift+Return exec /usr/bin/google-chrome
+bindsym $mod+Shift+Return exec /usr/bin/firefox #/usr/bin/google-chrome
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -148,12 +151,33 @@ bindsym $mod+Shift+Ctrl+9 move container to workspace $ws19
 
 bindsym $mod+Shift+grave move container to workspace $ws20
 
+# bind multimedia key
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
+# # Sreen brightness controls
+bindsym XF86MonBrightnessUp exec ~/.config/i3/scripts/xrandr_backlight.sh $mainMonitor +10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec  ~/.config/i3/scripts/xrandr_backlight.sh $mainMonitor -10 # decrease screen brightness
+
+# # Touchpad controls
+#bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+
+# # Media player controls
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+
 # Configure Scratchpad
 ## popup terminal
 for_window [instance="popup-term"] floating enable
 for_window [instance="popup-term"] resize set 750 400 
 for_window [instance="popup-term"] move scratchpad
-for_window [instance="popup-term"] border pixel 5 
+for_window [instance="popup-term"] sticky enable 
+for_window [instance="popup-term"] border pixel 5
 exec --no-startup-id $term -n "popup-term" 
 bindsym $mod+u [instance="popup-term"] scratchpad show; [instance="popup-term"] move position center
 
@@ -161,6 +185,7 @@ bindsym $mod+u [instance="popup-term"] scratchpad show; [instance="popup-term"] 
 for_window [instance="popup-arithmetic"] floating enable
 for_window [instance="popup-arithmetic"] resize set 700 300
 for_window [instance="popup-arithmetic"] move scratchpad
+for_window [instance="popup-arithmetic"] sticky enable
 for_window [instance="popup-arithmetic"] border pixel 5
 exec $term -n "popup-arithmetic" -e python3 -q
 bindsym $mod+a [instance="popup-arithmetic"] scratchpad show; [instance="popup-arithmetic"] move position center
@@ -255,16 +280,17 @@ bindsym $mod+r mode "Resize Mode"
 bindsym $mod+Shift+p exec ~/.config/polybar/scripts/powermenu
 
 # x2x menu
-bindsym $mod+Shift+x exec ~/.config/regolith/i3/scripts/x2xmenu
+bindsym $mod+Shift+x exec ~/.config/i3/scripts/x2xmenu
 
 # music/rhythmbox menu
-bindsym $mod+m exec ~/.config/regolith/i3/scripts/rhythmbox-menu
+bindsym $mod+m exec ~/.config/i3/scripts/rhythmbox-menu
 
 # Disable titlebar
 new_window pixel 1
 new_float pixel 1
 
 # Gaps (i3-gaps)
+#for_window [class=".*"] border pixel 0
 gaps inner 8
 gaps outer 0
 
@@ -378,6 +404,6 @@ exec --no-startup-id /usr/bin/regolith-ftue.sh
 exec --no-startup-id /usr/bin/unclutter -b
 
 # Set wallpaper and theme via wal
-exec --no-startup-id wal -q -i $wallpaper & #~/Pictures/Wallpapers/minimalist-nature-forest-mountains-digital-art-uhdpaper.com-hd-36.jpg
+exec --no-startup-id wal -q -i $wallpaper & 
 
 
