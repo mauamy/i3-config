@@ -9,7 +9,10 @@ set $mod Mod4
 set $mainMonitor eDP-1-1
 
 # Set wallpaper path
-set $wallpaper ~/Pictures/Wallpapers/forest-at-dusk-mikael-gustafsson-download-link-in-comments-1920×1080.png
+set $wallpaper ~/Pictures/Wallpapers/DiagonAlley.png
+
+# Set wallpaper and theme via wal
+exec --no-startup-id wal -q -i $wallpaper 
 
 #house-in-woods-minimalism_1920x1080.png
 #nature-sunrise-digital-art-river-landscape-mountains-trees-uhdpaper.com-hd-31.png 
@@ -157,6 +160,13 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #i
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
+
+# Media player controls
+bindsym XF86AudioPlay exec cmus-remote --play
+bindsym XF86AudioPause exec cmus-remote --pause
+bindsym XF86AudioNext exec cmus-remote --next
+bindsym XF86AudioPrev exec cmus-remote --prev
+
 # # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec ~/.config/i3/scripts/xrandr_backlight.sh $mainMonitor +10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec  ~/.config/i3/scripts/xrandr_backlight.sh $mainMonitor -10 # decrease screen brightness
@@ -164,12 +174,10 @@ bindsym XF86MonBrightnessDown exec  ~/.config/i3/scripts/xrandr_backlight.sh $ma
 # # Touchpad controls
 #bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
 
-# # Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-
+# Screenshot shortcuts
+bindsym --release Print exec gnome-screenshot 	# screenshot everything
+bindsym --release Shift+Print exec gnome-screenshot -w 	# screenshot the current window
+bindsym --release $mod+Print exec gnome-screenshot -a 	# select screenshot space
 
 # Configure Scratchpad
 ## popup terminal
@@ -189,6 +197,16 @@ for_window [instance="popup-arithmetic"] sticky enable
 for_window [instance="popup-arithmetic"] border pixel 5
 exec $term -n "popup-arithmetic" -e python3 -q
 bindsym $mod+a [instance="popup-arithmetic"] scratchpad show; [instance="popup-arithmetic"] move position center
+
+## cmus
+for_window [instance="cmus"] floating enable
+for_window [instance="cmus"] resize set 750 400
+for_window [instance="cmus"] move scratchpad
+for_window [instance="cmus"] sticky enable
+for_window [instance="cmus"] border pixel 5
+exec $term -n "cmus" -e /home/ymau/.config/i3/scripts/cmus_startup.sh 
+bindsym $mod+m [instance="cmus"] scratchpad show; [instance="cmus"] move position center
+
 
 ## dashboard
 #for_window [instance="dashboard"] floating enable
@@ -283,7 +301,7 @@ bindsym $mod+Shift+p exec ~/.config/polybar/scripts/powermenu
 bindsym $mod+Shift+x exec ~/.config/i3/scripts/x2xmenu
 
 # music/rhythmbox menu
-bindsym $mod+m exec ~/.config/i3/scripts/rhythmbox-menu
+#bindsym $mod+m exec ~/.config/i3/scripts/rhythmbox-menu
 
 # Disable titlebar
 new_window pixel 1
@@ -297,29 +315,29 @@ gaps outer 0
 # Only enable gaps on a workspace when there is at least one container
 #smart_gaps on
 
-set_from_resource $focused.color.border i3-wm.client.focused.color.border "#002b36"
-set_from_resource $focused.color.background i3-wm.client.focused.color.background "#586e75"
-set_from_resource $focused.color.text i3-wm.client.focused.color.text "#fdf6e3"
-set_from_resource $focused.color.indicator i3-wm.client.focused.color.indicator "#268bd2"
-set_from_resource $focused.color.child_border i3-wm.client.focused.color.child_border
+#set_from_resource $focused.color.border i3-wm.client.focused.color.border "#002b36"
+#set_from_resource $focused.color.background i3-wm.client.focused.color.background "#586e75"
+#set_from_resource $focused.color.text i3-wm.client.focused.color.text "#fdf6e3"
+#set_from_resource $focused.color.indicator i3-wm.client.focused.color.indicator "#268bd2"
+#set_from_resource $focused.color.child_border i3-wm.client.focused.color.child_border
 
-set_from_resource $focused_inactive.color.border i3-wm.client.focused_inactive.color.border "#002b36"
-set_from_resource $focused_inactive.color.background i3-wm.client.focused_inactive.color.background "#073642"
-set_from_resource $focused_inactive.color.text i3-wm.client.focused_inactive.color.text "#839496"
-set_from_resource $focused_inactive.color.indicator i3-wm.client.focused_inactive.color.indicator "#073642"
-set_from_resource $focused_inactive.color.child_border i3-wm.client.focused_inactive.color.child_border 
+#set_from_resource $focused_inactive.color.border i3-wm.client.focused_inactive.color.border "#002b36"
+#set_from_resource $focused_inactive.color.background i3-wm.client.focused_inactive.color.background "#073642"
+#set_from_resource $focused_inactive.color.text i3-wm.client.focused_inactive.color.text "#839496"
+#set_from_resource $focused_inactive.color.indicator i3-wm.client.focused_inactive.color.indicator "#073642"
+#set_from_resource $focused_inactive.color.child_border i3-wm.client.focused_inactive.color.child_border 
 
-set_from_resource $unfocused.color.border i3-wm.client.unfocused.color.border "#002b36"
-set_from_resource $unfocused.color.background i3-wm.client.unfocused.color.background "#073642"
-set_from_resource $unfocused.color.text i3-wm.client.unfocused.color.text "#839496"
-set_from_resource $unfocused.color.indicator i3-wm.client.unfocused.color.indicator "#073642"
-set_from_resource $unfocused.color.child_border i3-wm.client.unfocused.color.child_border
+#set_from_resource $unfocused.color.border i3-wm.client.unfocused.color.border "#002b36"
+#set_from_resource $unfocused.color.background i3-wm.client.unfocused.color.background "#073642"
+#set_from_resource $unfocused.color.text i3-wm.client.unfocused.color.text "#839496"
+#set_from_resource $unfocused.color.indicator i3-wm.client.unfocused.color.indicator "#073642"
+#set_from_resource $unfocused.color.child_border i3-wm.client.unfocused.color.child_border
 
-set_from_resource $urgent.color.border i3-wm.client.urgent.color.border "#002b36"
-set_from_resource $urgent.color.background i3-wm.client.urgent.color.background "#dc322f"
-set_from_resource $urgent.color.text i3-wm.client.urgent.color.text "#fdf6e3"
-set_from_resource $urgent.color.indicator i3-wm.client.urgent.color.indicator "#002b36"
-set_from_resource $urgent.color.child_border i3-wm.client.urgent.color.child_border
+#set_from_resource $urgent.color.border i3-wm.client.urgent.color.border "#002b36"
+#set_from_resource $urgent.color.background i3-wm.client.urgent.color.background "#dc322f"
+#set_from_resource $urgent.color.text i3-wm.client.urgent.color.text "#fdf6e3"
+#set_from_resource $urgent.color.indicator i3-wm.client.urgent.color.indicator "#002b36"
+#set_from_resource $urgent.color.child_border i3-wm.client.urgent.color.child_border
 
 
 # Window Border color
@@ -384,6 +402,9 @@ for_window [instance="Toolkit"] sticky enable
 # add title bar for omnet ide
 #for_window [instance="Qtenv"] border normal
 
+# make htbah window floating for development
+for_window [class="htbah"] floating enable
+
 # bind programm to specific workspaces
 assign [class="Rhythmbox"] $ws10
 
@@ -397,13 +418,6 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh &
 # Composite manager
 exec --no-startup-id compton -f --config /etc/xdg/compton.conf
 
-# Launch the shortcut Conky window on first login
-exec --no-startup-id /usr/bin/regolith-ftue.sh
-
 # Hide the mouse pointer if unused for a duration
 exec --no-startup-id /usr/bin/unclutter -b
-
-# Set wallpaper and theme via wal
-exec --no-startup-id wal -q -i $wallpaper & 
-
 
