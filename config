@@ -11,11 +11,11 @@ set $mainMonitor eDP-1
 set $scripts ~/.config/i3/scripts
 
 # Set wallpaper path
-set $wallpaper ~/Pictures/Wallpapers/japanese-street.png
+set $wallpaper ~/Pictures/Wallpapers/winding-river-through-forest-1920×1080.png
 set $lockimage ~/Pictures/Wallpapers/system.png
 
 # Set wallpaper and theme via wal
-exec --no-startup-id wal -q -i $wallpaper 
+exec --no-startup-id $scripts/set_wallpaper.sh $wallpaper
 
 #house-in-woods-minimalism_1920x1080.png
 #nature-sunrise-digital-art-river-landscape-mountains-trees-uhdpaper.com-hd-31.png 
