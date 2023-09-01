@@ -10,8 +10,10 @@ set $mainMonitor eDP-1
 
 set $scripts ~/.config/i3/scripts
 
+
 # Set wallpaper path
-set $wallpaper ~/Pictures/Wallpapers/winding-river-through-forest-1920×1080.png
+set $wallpaper ~/Pictures/Wallpapers/painted-japanese-countryside-1920×1080.jpg
+#winding-river-through-forest-1920×1080.png
 set $lockimage ~/Pictures/Wallpapers/system.png
 
 # Set wallpaper and theme via wal
@@ -53,7 +55,10 @@ set $term /usr/local/bin/st
 bindsym $mod+Return exec $term 
 
 # start a web browser
-bindsym $mod+Shift+Return exec /usr/bin/firefox #/usr/bin/google-chrome
+bindsym $mod+Shift+Return exec /usr/bin/firefox -P #/usr/bin/google-chrome
+
+# start keepassxc
+bindsym $mod+k exec /usr/bin/keepassxc
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -90,6 +95,10 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
+# move workspace to output
+bindsym $mod+Shift+A move workspace to output left
+bindsym $mod+Shift+D move workspace to output right
+
 # toggle split orientation
 bindsym $mod+BackSpace split toggle
 
@@ -97,8 +106,8 @@ bindsym $mod+BackSpace split toggle
 bindsym $mod+f fullscreen toggle
 
 # change gaps interactively
-bindsym $mod+minus gaps inner current minus 6
-bindsym $mod+plus gaps inner current plus 6
+#bindsym $mod+minus gaps inner current minus 6
+#bindsym $mod+plus gaps inner current plus 6
 
 # show/hide keybindings
 bindsym $mod+Shift+question exec --no-startup-id /usr/bin/conky-toggle.sh
@@ -132,6 +141,17 @@ bindsym $mod+Ctrl+6 workspace $ws16
 bindsym $mod+Ctrl+7 workspace $ws17
 bindsym $mod+Ctrl+8 workspace $ws18
 bindsym $mod+Ctrl+9 workspace $ws19
+
+#workspace $ws1 output eDP-1
+#workspace $ws2 output eDP-1
+#workspace $ws3 output eDP-1
+#workspace $ws4 output eDP-1
+#workspace $ws5 output eDP-1
+#workspace $ws6 output DP-1-8
+#workspace $ws7 output DP-1-8
+#workspace $ws8 output DP-1-8
+#workspace $ws9 output DP-1-8
+#workspace $ws10 output DP-1-8
 
 # cycle between workspace
 bindsym $mod+Tab workspace next
@@ -182,10 +202,14 @@ bindsym XF86MonBrightnessDown exec  $scripts/xrandr_backlight.sh $mainMonitor -1
 
 # Screenshot shortcuts
 bindsym --release Print exec gnome-screenshot 	# screenshot everything
-bindsym --release Shift+Print exec gnome-screenshot -w 	# screenshot the current window
+bindsym --release Shift+Print exec gnome-screenshot -w # screenshot the current window
 bindsym --release $mod+Print exec gnome-screenshot -a 	# select screenshot space
 
 # Configure Scratchpad
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
 ## popup terminal
 for_window [instance="popup-term"] floating enable
 for_window [instance="popup-term"] resize set 750 400 
@@ -194,6 +218,25 @@ for_window [instance="popup-term"] sticky enable
 for_window [instance="popup-term"] border pixel 5
 exec --no-startup-id $term -n "popup-term" 
 bindsym $mod+u [instance="popup-term"] scratchpad show; [instance="popup-term"] move position center
+
+## ranger fm
+#for_window [instance="ranger"] floating enable
+#for_window [instance="ranger"] resize set 800 450 
+#for_window [instance="ranger"] move scratchpad
+#for_window [instance="ranger"] sticky enable 
+#for_window [instance="ranger"] border pixel 5
+#exec --no-startup-id $term -n "ranger" -e $scripts/wal_and_start.sh ranger 
+#bindsym $mod+i [instance="ranger"] scratchpad show; [instance="ranger"] move position center
+
+## k9s
+for_window [instance="k9s"] floating enable
+for_window [instance="k9s"] resize set 850 450 
+for_window [instance="k9s"] move scratchpad
+for_window [instance="k9s"] sticky enable 
+for_window [instance="k9s"] border pixel 5
+exec --no-startup-id $term -n "k9s" -e $scripts/wal_and_start.sh k9s 
+bindsym $mod+i [instance="k9s"] scratchpad show; [instance="k9s"] move position center
+
 
 ## arithmetic terminal
 for_window [instance="popup-arithmetic"] floating enable
@@ -205,14 +248,23 @@ exec $term -n "popup-arithmetic" -e python3 -q
 bindsym $mod+a [instance="popup-arithmetic"] scratchpad show; [instance="popup-arithmetic"] move position center
 
 ## cmus
-for_window [instance="cmus"] floating enable
-for_window [instance="cmus"] resize set 750 400
-for_window [instance="cmus"] move scratchpad
-for_window [instance="cmus"] sticky enable
-for_window [instance="cmus"] border pixel 5
-exec $term -n "cmus" -e $scripts/cmus_startup.sh 
-bindsym $mod+m [instance="cmus"] scratchpad show; [instance="cmus"] move position center
+#for_window [instance="cmus"] floating enable
+#for_window [instance="cmus"] resize set 750 400
+#for_window [instance="cmus"] move scratchpad
+#for_window [instance="cmus"] sticky enable
+#for_window [instance="cmus"] border pixel 5
+#exec $term -n "cmus" -e $scripts/wal_and_start.sh cmus 
+#bindsym $mod+m [instance="cmus"] scratchpad show; [instance="cmus"] move position center
 
+
+## spotify
+for_window [instance="spt"] floating enable
+for_window [instance="spt"] resize set 750 400
+for_window [instance="spt"] move scratchpad
+for_window [instance="spt"] sticky enable
+for_window [instance="spt"] border pixel 5
+exec $term -n "spt" -e $scripts/wal_and_start.sh spt 
+bindsym $mod+m [instance="spt"] scratchpad show; [instance="spt"] move position center
 
 ## dashboard
 #for_window [instance="dashboard"] floating enable
@@ -257,11 +309,13 @@ bindsym $mod+Shift+e exit
 # shortcuts for common system configuration tasks
 bindsym $mod+c exec gnome-control-center
 bindsym $mod+w exec gnome-control-center wifi
-bindsym $mod+b exec gnome-control-center bluetooth
-bindsym $mod+d exec gnome-control-center display
+bindsym $mod+b exec blueman-manager
+# bindsym $mod+d exec gnome-control-center display
 bindsym $mod+n exec gnome-control-center network
 bindsym $mod+p exec gnome-control-center power
-bindsym $mod+s exec gnome-control-center sound
+bindsym $mod+s exec pavucontrol 
+
+
 
 # resize window (you can also use the mouse for that)
 mode "Resize Mode" {
@@ -303,11 +357,15 @@ bindsym $mod+r mode "Resize Mode"
 #}
 bindsym $mod+Shift+p exec ~/.config/polybar/scripts/powermenu
 
-# x2x menu
+# 
 bindsym $mod+Shift+x exec $scripts/x2xmenu
+bindsym $mod+d exec $scripts/display.sh
 
 # music/rhythmbox menu
 #bindsym $mod+m exec ~/.config/i3/scripts/rhythmbox-menu
+
+# KVM menu
+bindsym $mod+v exec $scripts/kvmenu.sh
 
 # Disable titlebar
 new_window pixel 1
@@ -370,6 +428,15 @@ for_window [class="htbah"] floating enable
 
 # bind programm to specific workspaces
 assign [class="Rhythmbox"] $ws10
+# MS Teams
+assign [class="crx_cifhbcnohmdccbgoicgdjpfamggdegmo"] $ws5 
+assign [class="Telegram"] $ws5
+assign [class="Signal"] $ws5
+
+# configure MS Teams Notification Windows
+for_window [title="Microsoft Teams Notification" class="microsoft teams - preview"] floating enable
+for_window [title="Microsoft Teams Notification" class="Microsoft Teams - Preview"] floating enable 
+
 
 # Run programs when i3 starts
 
@@ -384,3 +451,10 @@ exec --no-startup-id compton -f --config /etc/xdg/compton.conf
 # Hide the mouse pointer if unused for a duration
 exec --no-startup-id /usr/bin/unclutter -b
 
+# start syncthing on startup
+exec --no-startup-id /usr/bin/syncthing -no-browser -logfile=default
+
+exec_always setxkbmap -layout de
+
+#exec --no-startup-id picom &
+# exec --no-startup-id dunst --config /home/yannick/.config/dunst/dunstrc
